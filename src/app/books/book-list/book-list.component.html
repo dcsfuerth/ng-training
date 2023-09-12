@@ -1,20 +1,26 @@
 <p>book-list works!</p>
 
+<!-- {{books | json}} -->
+
 <ng-template #noBooks>Leider keine Bücher vorhanden.</ng-template>
+
+<button (click)="toggleCover()">
+    Cover {{coverIsVisible ? 'aus' : 'ein'}}schalten
+</button>
 
 <table border="1" *ngIf="books?.length; else noBooks">
     <tr>
+        <td *ngIf="coverIsVisible">Cover</td>
         <td>ISBN</td>
         <td>Titel</td>
-        <td>Preis</td>
-        <td>Rating</td>
+        <td>Preis in Euro</td>
         <td>Aktionen</td>
     </tr>
     <tr *ngFor="let book of books; index as i; trackBy: getBuchId">
+        <td *ngIf="coverIsVisible"><img [src]='book.coverUrl' [style.width.px]="20"></td>
         <td>{{book.isbn}}</td>
         <td>{{book.title}}</td>
-        <td></td>
-        <td></td>
+        <td [ngClass]="{'on-discount': book.price < 10}">{{book.price}}</td>
         <td></td>
     </tr>
 </table>
