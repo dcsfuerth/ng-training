@@ -1,0 +1,20 @@
+<p>book-list works!</p>
+
+<ng-template #noBooks>Leider keine Bücher vorhanden.</ng-template>
+
+<table border="1" *ngIf="books?.length; else noBooks">
+    <tr>
+        <td>ISBN</td>
+        <td>Titel</td>
+        <td>Preis</td>
+        <td>Rating</td>
+        <td>Aktionen</td>
+    </tr>
+    <tr *ngFor="let book of books; index as i; trackBy: getBuchId">
+        <td>{{book.isbn}}</td>
+        <td>{{book.title}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
