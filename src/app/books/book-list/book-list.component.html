@@ -2,6 +2,16 @@
 
 <!-- {{books | json}} -->
 
+<p>
+    <label for="filter">Filtern nach:</label>
+    <input type="text" name="filter" 
+    [(ngModel)]="filterValue">
+</p>
+
+<p>
+    Liste gefiltert nach '{{filterValue}}'
+</p>
+
 <ng-template #noBooks>Leider keine Bücher vorhanden.</ng-template>
 
 <button (click)="toggleCover()">

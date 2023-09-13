@@ -26,6 +26,7 @@ export class BookListComponent {
   ];
 
   breite = 100 * Math.random();
+  filterValue = '';
 
   toggleCover() {
     this.coverIsVisible = !this.coverIsVisible;
