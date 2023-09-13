@@ -4,8 +4,7 @@
 
 <p>
     <label for="filter">Filtern nach:</label>
-    <input type="text" name="filter" 
-    [(ngModel)]="filterValue">
+    <input type="text" name="filter" [(ngModel)]="filterValue">
 </p>
 
 <p>
@@ -30,7 +29,9 @@
         <td *ngIf="coverIsVisible"><img [src]='book.coverUrl' [style.width.px]="20"></td>
         <td>{{book.isbn}}</td>
         <td>{{book.title}}</td>
-        <td [ngClass]="{'on-discount': book.price < 10}">{{book.price}}</td>
+        <td [ngClass]="{'on-discount': book.price < 10}">
+            {{book.price | currency:'EUR':'symbol':'1.2-2'}}
+        </td>
         <td></td>
     </tr>
 </table>
