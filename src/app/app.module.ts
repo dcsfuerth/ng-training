@@ -12,6 +12,8 @@ import { registerLocaleData } from '@angular/common';
 import { BookFilterPipe } from './books/book-filter.pipe';
 import { RatingComponent } from './shared/rating/rating.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 registerLocaleData(localeDe);
 
@@ -22,8 +24,17 @@ registerLocaleData(localeDe);
     CalculatorComponent,
     BookFilterPipe,
     RatingComponent,
+    WelcomeComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: WelcomeComponent, pathMatch: 'full' },
+      { path: 'books', component: BookListComponent },
+    ]),
+  ],
   providers: [{ provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
 })
