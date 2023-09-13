@@ -1,0 +1,18 @@
+{
+  "books": [
+    {
+      "isbn": "978-1-891830-77-8",
+      "title": "The Lord of the TS 2",
+      "coverUrl": "https://m.media-amazon.com/images/I/71Wv+d6oP6L._AC_UY218_.jpg",
+      "price": 9,
+      "rating": 2.3
+    },
+    {
+      "isbn": "978-1-891830-77-9",
+      "title": "The Lord of the JS",
+      "coverUrl": "https://m.media-amazon.com/images/I/71uSIJwhnmL._AC_UY218_.jpg",
+      "price": 19,
+      "rating": 2.9
+    }
+  ]
+}

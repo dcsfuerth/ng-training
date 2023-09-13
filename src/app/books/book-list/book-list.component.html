@@ -4,7 +4,7 @@
 
 <p>
     <label for="filter">Filtern nach:</label>
-    <input type="text" name="filter" [(ngModel)]="filterValue">
+    <input required minlength="3" type="text" name="filter" [(ngModel)]="filterValue">
 </p>
 
 <p>
@@ -23,15 +23,20 @@
         <td>ISBN</td>
         <td>Titel</td>
         <td>Preis in Euro</td>
-        <td>Aktionen</td>
+        <td>Rating</td>
     </tr>
-    <tr *ngFor="let book of books; index as i; trackBy: getBuchId">
+    <tr *ngFor="let book of (books | bookFilter: filterValue) ; trackBy: getBuchId">
         <td *ngIf="coverIsVisible"><img [src]='book.coverUrl' [style.width.px]="20"></td>
         <td>{{book.isbn}}</td>
         <td>{{book.title}}</td>
         <td [ngClass]="{'on-discount': book.price < 10}">
             {{book.price | currency:'EUR':'symbol':'1.2-2'}}
         </td>
-        <td></td>
+        <td>
+            <book-rating [id]="book.isbn" [stars]="book.rating" (upVote)="storeUpVote($event)"
+                (downVote)="storeDownVote($event)">
+            </book-rating>
+            <button (click)="deleteBook(book.isbn)">[-]</button>
+        </td>
     </tr>
 </table>
