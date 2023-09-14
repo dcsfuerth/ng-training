@@ -1,5 +1,6 @@
 import { CanActivateFn } from '@angular/router';
 
 export const bookGuard: CanActivateFn = (route, state) => {
-  return true;
+  console.log({ route, state });
+  return false;
 };

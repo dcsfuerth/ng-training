@@ -14,13 +14,14 @@ import { RatingComponent } from './shared/rating/rating.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { bookGuard } from './books/book.guard';
 
 registerLocaleData(localeDe);
 
 const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
-  { path: 'books', component: BookListComponent },
+  { path: 'books', component: BookListComponent, canActivate: [bookGuard] },
   { path: 'book/:isbn', component: BookListComponent },
 ];
 @NgModule({
