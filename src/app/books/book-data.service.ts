@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Book } from './book';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,32 +12,13 @@ export class BookDataService {
     //
   }
 
+  private SERVER_URL = environment.SERVER_URL;
+
   deleteBook(isbn: string) {
-    return this.http.delete(`http://localhost:3000/books/${isbn}`);
+    return this.http.delete(`${this.SERVER_URL}/${isbn}`);
   }
 
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>('http://localhost:3000/books');
-  }
-
-  getBooksOld(): Book[] {
-    return [
-      {
-        isbn: '978-1-891830-77-8',
-        title: 'The Lord of the TS 2',
-        coverUrl:
-          'https://m.media-amazon.com/images/I/71Wv+d6oP6L._AC_UY218_.jpg',
-        price: 9,
-        rating: 2.3,
-      },
-      {
-        isbn: '978-1-891830-77-9',
-        title: 'The Lord of the JS',
-        coverUrl:
-          'https://m.media-amazon.com/images/I/71uSIJwhnmL._AC_UY218_.jpg',
-        price: 19,
-        rating: 2.9,
-      },
-    ];
+    return this.http.get<Book[]>(this.SERVER_URL);
   }
 }

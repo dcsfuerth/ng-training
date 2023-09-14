@@ -14,6 +14,7 @@ import { BookDataService } from '../book-data.service';
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent implements OnInit, OnChanges, OnDestroy {
+  
   constructor(private bookDataService: BookDataService) {
     console.log('BookListComponent.constructor()');
   }
