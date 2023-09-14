@@ -12,11 +12,17 @@ import { registerLocaleData } from '@angular/common';
 import { BookFilterPipe } from './books/book-filter.pipe';
 import { RatingComponent } from './shared/rating/rating.component';
 import { HttpClientModule } from '@angular/common/http';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 registerLocaleData(localeDe);
 
+const routes: Routes = [
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'welcome', component: WelcomeComponent },
+  { path: 'books', component: BookListComponent },
+  { path: 'book/:isbn', component: BookListComponent },
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,10 +36,7 @@ registerLocaleData(localeDe);
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: '', component: WelcomeComponent, pathMatch: 'full' },
-      { path: 'books', component: BookListComponent },
-    ]),
+    RouterModule.forRoot(routes, { enableTracing: false }),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],

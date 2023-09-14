@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,4 +10,10 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   umgebung = environment.PRODUCTION ? 'Produktion' : 'Entwicklung';
   title = 'books';
+
+  constructor(private router: Router) {}
+
+  gotoBooks() {
+    this.router.navigateByUrl('/books');
+  }
 }
