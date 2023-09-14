@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Book } from '../book';
 import { BookDataService } from '../book-data.service';
+import { Subject, filter, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'book-list',
@@ -14,12 +15,15 @@ import { BookDataService } from '../book-data.service';
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent implements OnInit, OnChanges, OnDestroy {
-  
+  private destroy$ = new Subject();
+
+  books$: any;
+
   constructor(private bookDataService: BookDataService) {
     console.log('BookListComponent.constructor()');
   }
 
-  ngOnInit() {
+  ngOnInitAlt() {
     console.log('BookListComponent.ngOnInit()');
     // this.books = this.bookDataService.getBooks();
 
@@ -28,12 +32,26 @@ export class BookListComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  async ngOnInit() {
+    console.log('BookListComponent.ngOnInit()');
+
+    timer(0, 500).pipe(takeUntil(this.destroy$)).subscribe(console.log);
+
+    const obs = timer(0, 1000).pipe(takeUntil(this.destroy$));
+    const obs2 = obs.pipe(filter((x) => x % 2 === 0));
+    const wat = obs2.subscribe((x) => console.log('bruder', x));
+
+    this.books$ = this.bookDataService.getBooks();
+    this.books = await this.bookDataService.getBooksAsPromise();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log('BookListComponent.ngOnChanges()', changes);
   }
 
   ngOnDestroy(): void {
     console.log('BookListComponent.ngOnDestroy()');
+    this.destroy$.next('bumm');
   }
 
   storeUpVote(isbn: string) {

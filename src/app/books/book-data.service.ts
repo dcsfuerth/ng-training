@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Book } from './book';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,5 +20,9 @@ export class BookDataService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.SERVER_URL);
+  }
+
+  getBooksAsPromise(): Promise<Book[]> {
+    return firstValueFrom(this.getBooks());
   }
 }
