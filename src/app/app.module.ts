@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { BookListComponent } from './books/book-list/book-list.component';
 
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,27 +11,14 @@ import { LOCALE_ID, isDevMode } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { BookFilterPipe } from './books/book-filter.pipe';
-import { bookGuard } from './books/book.guard';
+import { BooksModule } from './books/books.module';
 import { counterReducer } from './counter/counter.reduser';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(localeDe);
 
-const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'books', component: BookListComponent, canActivate: [bookGuard] },
-  { path: 'book/:isbn', component: BookListComponent },
-];
+const routes: Routes = [{ path: '', redirectTo: 'welcome', pathMatch: 'full' }];
 @NgModule({
-  declarations: [
-    AppComponent,
-    BookListComponent,
-    BookFilterPipe,
-    WelcomeComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -40,7 +26,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { enableTracing: false }),
     StoreModule.forRoot({ count: counterReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    SharedModule,
+    BooksModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
