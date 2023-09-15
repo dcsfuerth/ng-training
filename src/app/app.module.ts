@@ -16,7 +16,13 @@ import { counterReducer } from './counter/counter.reduser';
 
 registerLocaleData(localeDe);
 
-const routes: Routes = [{ path: '', redirectTo: 'welcome', pathMatch: 'full' }];
+const routes: Routes = [
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'a', loadChildren: () => import('./modulea/modulea.module').then(m => m.ModuleaModule) },
+  { path: 'b', loadChildren: () => import('./moduleb/moduleb.module').then(m => m.ModulebModule) }
+];
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

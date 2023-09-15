@@ -8,6 +8,7 @@ import {
 import { Book } from '../book';
 import { BookDataService } from '../book-data.service';
 import { Subject, filter, takeUntil, timer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'book-list',
@@ -19,30 +20,19 @@ export class BookListComponent implements OnInit, OnChanges, OnDestroy {
 
   books$: any;
 
-  constructor(private bookDataService: BookDataService) {
+  constructor(
+    private bookDataService: BookDataService,
+    private activatedRoute: ActivatedRoute
+  ) {
     console.log('BookListComponent.constructor()');
   }
 
-  ngOnInitAlt() {
+  ngOnInit() {
     console.log('BookListComponent.ngOnInit()');
-    // this.books = this.bookDataService.getBooks();
 
-    this.bookDataService.getBooks().subscribe((books) => {
+    this.activatedRoute.data.subscribe(({ books }) => {
       this.books = books;
     });
-  }
-
-  async ngOnInit() {
-    console.log('BookListComponent.ngOnInit()');
-
-    timer(0, 500).pipe(takeUntil(this.destroy$)).subscribe(console.log);
-
-    const obs = timer(0, 1000).pipe(takeUntil(this.destroy$));
-    const obs2 = obs.pipe(filter((x) => x % 2 === 0));
-    const wat = obs2.subscribe((x) => console.log('bruder', x));
-
-    this.books$ = this.bookDataService.getBooks();
-    this.books = await this.bookDataService.getBooksAsPromise();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
