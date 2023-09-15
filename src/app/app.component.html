@@ -6,8 +6,10 @@
 <br />
 <router-outlet></router-outlet>
 <br />
-<!-- <button (click)="gotoBooks()">zu den Büchern</button>
-<br />
-<div routerLink="/books">zu den Büchern</div>
-<br />
-{{umgebung}} -->
+
+<p>Counter: {{count$ | async}}</p>
+<p>
+    <button (click)="increment()">+</button>
+    <button (click)="decrement()">-</button>
+    <button (click)="reset()">Reset</button>
+</p>

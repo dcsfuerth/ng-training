@@ -1,16 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  of,
-  from,
-  timer,
-  filter,
-  map,
-  Subject,
-  BehaviorSubject,
-  ReplaySubject,
-} from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, ReplaySubject, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
+import { increment, decrement, reset } from './counter/counter.actions';
 
 @Component({
   selector: 'book-root',
@@ -20,11 +14,27 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   umgebung = environment.PRODUCTION ? 'Produktion' : 'Entwicklung';
   title = 'books';
+  count$: Observable<number> = of(0);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<{ count: number }>) {
+    this.count$ = store.select('count'); // Selektor
+  }
 
   gotoBooks() {
     this.router.navigateByUrl('/books');
+  }
+
+  increment() {
+    const action = increment();
+    this.store.dispatch(action);
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+  
+  reset() {
+    this.store.dispatch(reset());
   }
 
   ngOnInit() {
