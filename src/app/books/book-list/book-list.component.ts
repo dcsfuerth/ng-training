@@ -20,6 +20,11 @@ export class BookListComponent implements OnInit, OnChanges, OnDestroy {
 
   books$: any;
 
+  /**
+   * Konstruktor
+   * @param bookDataService  Buchdaten-Service
+   * @param activatedRoute  Aktivierter Pfad
+   */
   constructor(
     private bookDataService: BookDataService,
     private activatedRoute: ActivatedRoute
@@ -27,6 +32,9 @@ export class BookListComponent implements OnInit, OnChanges, OnDestroy {
     console.log('BookListComponent.constructor()');
   }
 
+  /**
+   * Lifecycle Hook: Lädt Bücherdaten beim Start der Komponente
+   */
   ngOnInit() {
     console.log('BookListComponent.ngOnInit()');
 
