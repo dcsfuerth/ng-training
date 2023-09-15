@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
-import { FormsModule } from '@angular/forms';
-import { CalculatorComponent } from './shared/calculator/calculator.component';
 
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import { LOCALE_ID, isDevMode } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import { BookFilterPipe } from './books/book-filter.pipe';
-import { RatingComponent } from './shared/rating/rating.component';
-import { HttpClientModule } from '@angular/common/http';
-import { Router, RouterModule, Routes } from '@angular/router';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { bookGuard } from './books/book.guard';
+import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter/counter.reduser';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BookFilterPipe } from './books/book-filter.pipe';
+import { bookGuard } from './books/book.guard';
+import { counterReducer } from './counter/counter.reduser';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(localeDe);
 
@@ -31,9 +30,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     BookListComponent,
-    CalculatorComponent,
     BookFilterPipe,
-    RatingComponent,
     WelcomeComponent,
   ],
   imports: [
@@ -43,6 +40,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { enableTracing: false }),
     StoreModule.forRoot({ count: counterReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    SharedModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
