@@ -2,13 +2,16 @@
   "name": "books",
   "version": "0.0.0",
   "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "hund": "echo 'wuff'",
-    "db": "json-server ./src/data/db.json --id isbn --delay 300 --watch"
+    "db": "json-server ./src/data/db.json --id isbn --delay 300 --watch",
+    "start:prod": "ng build -c production && http-server -c-1 -P http://localhost:3000 ./dist/books"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +23,7 @@
     "@angular/platform-browser": "^16.2.5",
     "@angular/platform-browser-dynamic": "^16.2.5",
     "@angular/router": "^16.2.5",
+    "@angular/service-worker": "^16.2.5",
     "@ngrx/store": "^16.2.0",
     "@ngrx/store-devtools": "^16.2.0",
     "rxjs": "~7.8.0",
@@ -30,7 +34,9 @@
     "@angular-devkit/build-angular": "^16.2.2",
     "@angular/cli": "~16.2.2",
     "@angular/compiler-cli": "^16.2.5",
+    "@briebug/cypress-schematic": "^5.0.1",
     "@types/jasmine": "~4.3.0",
+    "cypress": "latest",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -5,6 +5,7 @@ import { Observable, ReplaySubject, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { increment, decrement, reset } from './counter/counter.actions';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'book-root',
@@ -14,9 +15,24 @@ import { increment, decrement, reset } from './counter/counter.actions';
 export class AppComponent {
   umgebung = environment.PRODUCTION ? 'Produktion' : 'Entwicklung';
   title = 'books';
+  VERSION = 7;
   count$: Observable<number> = of(0);
 
-  constructor(private router: Router, private store: Store<{ count: number }>) {
+  constructor(
+    private router: Router,
+    private store: Store<{ count: number }>,
+    private swUpdate: SwUpdate
+  ) {
+    if (this.swUpdate?.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        // das kann etwas dauern...
+        console.log('swUpdate.available');
+        if (confirm('Neue Version verfügbar. Anwendung neu laden?')) {
+          window.location.reload();
+        }
+      });
+    }
+
     this.count$ = store.select('count'); // Selektor
   }
 
@@ -32,7 +48,7 @@ export class AppComponent {
   decrement() {
     this.store.dispatch(decrement());
   }
-  
+
   reset() {
     this.store.dispatch(reset());
   }

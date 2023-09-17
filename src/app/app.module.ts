@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BooksModule } from './books/books.module';
 import { counterReducer } from './counter/counter.reduser';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 registerLocaleData(localeDe);
 
@@ -33,6 +34,12 @@ const routes: Routes = [
     StoreModule.forRoot({ count: counterReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     BooksModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
